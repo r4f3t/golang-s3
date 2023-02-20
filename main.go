@@ -9,8 +9,8 @@ import (
 
 func main() {
 
-	aws_access_key_id := "AKIASGXB2POGYQQUXUUQ"
-	aws_secret_access_key := "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"
+	aws_access_key_id := "access_key"
+	aws_secret_access_key := "secret_key"
 
 	awsInstance := awsHelper.New(aws_access_key_id, aws_secret_access_key)
 
