@@ -12,7 +12,7 @@ import (
 )
 
 type AwsService interface {
-	Upload(file *os.File, path string) (string, error)
+	Upload(bucket, path string, file *os.File) (string, error)
 }
 
 type awsObject struct {
@@ -28,7 +28,7 @@ func New(accessKeyId, secretKey string) AwsService {
 	}
 }
 
-func (receiver *awsObject) Upload(file *os.File, path string) (string, error) {
+func (receiver *awsObject) Upload(bucket, path string, file *os.File) (string, error) {
 	fileInfo, _ := file.Stat()
 	size := fileInfo.Size()
 	buffer := make([]byte, size) // read file content to buffer
@@ -38,7 +38,7 @@ func (receiver *awsObject) Upload(file *os.File, path string) (string, error) {
 	fileType := http.DetectContentType(buffer)
 
 	params := &s3.PutObjectInput{
-		Bucket:        aws.String("myfirstbucketrafet"),
+		Bucket:        aws.String(bucket),
 		Key:           aws.String(path),
 		Body:          fileBytes,
 		ContentLength: aws.Int64(size),
